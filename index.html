@@ -7,16 +7,24 @@
     <meta name="description" content="Estrategias de respiración consciente y quietud para pausar el sobrepensamiento.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <!-- Menú Flotante -->
+    <!-- Menú Superior y Flotante -->
     <header class="header" id="navbar">
         <div class="container nav-container">
             <a href="#" class="logo">Ritmo de Calma</a>
-            <nav class="nav">
+            
+            <!-- Botón Menú Hamburguesa para Móvil -->
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+                <span></span>
+                <span></span>
+            </button>
+
+            <!-- Enlaces de Navegación -->
+            <nav class="nav" id="navMenu">
                 <a href="#filosofia">Filosofía</a>
                 <a href="#sobre-mi">Sobre mí</a>
                 <a href="#recurso" class="btn-secondary">Pausa de Emergencia</a>
@@ -44,8 +52,8 @@
                 <div class="about-text">
                     <span class="sub-title">El Origen</span>
                     <h2>Aprender a parar dentro del mismo ruido.</h2>
-                    <p>No llegué a estas técnicas desde una torre de tranquilidad, sino desde el cansancio de la rutina diaria. Conozco el peso del sobrepensamiento y la sensación de que el tiempo nunca alcanza.</p>
-                    <p>Esa búsqueda de paz me llevó a formarme profundamente en la práctica del yoga y la meditación. Mi objetivo es transmitirte estas herramientas con una estructura clara, paso a paso, para que puedas integrarlas y aprenderlas sin frustración. Comprobé que no hace falta aislarse del mundo para encontrar quietud: la herramienta más potente para regular nuestro sistema nervioso viaja siempre con nosotros.</p>
+                    <p>No llegué a estas técnicas desde una torre de tranquilidad, sino desde el cansancio de la rutina diaria. Conozco de primera mano el peso del sobrepensamiento y la sensación de que el tiempo nunca alcanza.</p>
+                    <p>Esa búsqueda de paz me llevó a formarme profundamente en la práctica del yoga y la meditación. Mi objetivo es transmitirte estas herramientas con una estructura clara, paso a paso, para que puedas integrarlas sin frustración. Comprobé que no hace falta aislarse del mundo para encontrar quietud: la herramienta más potente para regular nuestro sistema nervioso viaja siempre con nosotros.</p>
                 </div>
                 <div class="about-card">
                     <div class="card-inner">
@@ -64,7 +72,8 @@
         <section id="filosofia" class="pillars hidden">
             <div class="container">
                 <div class="section-header">
-                    <h2>Tres herramientas para reconectar</h2>
+                    <span class="sub-title">Metodología</span>
+                    <h2>Tres pilares para reconectar</h2>
                 </div>
                 <div class="pillars-grid">
                     <div class="pillar-card">
@@ -93,9 +102,9 @@
                     <h2>Descargá la Pausa de Emergencia</h2>
                     <p>Un audio guiado de 5 minutos pensado para momentos de agobio mental. Ponete los auriculares y recuperá el eje.</p>
                     
-                    <!-- Reproductor Visual Simulado -->
+                    <!-- Reproductor Visual -->
                     <div class="audio-player">
-                        <button class="play-btn" id="playBtn">▶</button>
+                        <button class="play-btn" id="playBtn" aria-label="Reproducir audio">▶</button>
                         <div class="progress-bar"><div class="progress"></div></div>
                         <span class="time">05:00</span>
                     </div>
@@ -111,10 +120,10 @@
         </section>
     </main>
 
-    <footer class="footer hidden">
+    <footer class="footer">
         <div class="container footer-content">
             <p>&copy; 2026 Ritmo de Calma. Todos los derechos reservados.</p>
-            <p class="footer-sub">Diseñado para tomar conciencia y respirar.</p>
+            <p class="footer-sub">Diseñado para respirar y pausar.</p>
         </div>
     </footer>
 
