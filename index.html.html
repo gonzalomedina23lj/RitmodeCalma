@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ritmo de Calma — Pausas de Respiración y Quietud Mental</title>
+    <meta name="description" content="Estrategias de respiración consciente y quietud para pausar el sobrepensamiento.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Menú Flotante -->
+    <header class="header" id="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">Ritmo de Calma</a>
+            <nav class="nav">
+                <a href="#filosofia">Filosofía</a>
+                <a href="#sobre-mi">Sobre mí</a>
+                <a href="#recurso" class="btn-secondary">Pausa de Emergencia</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero hidden">
+            <div class="hero-overlay"></div>
+            <div class="container hero-content">
+                <span class="badge">Práctica Consciente</span>
+                <h1>Pausá el ruido.<br>Recuperá tu eje.</h1>
+                <p>Una pausa simple y efectiva para desactivar el agobio de la rutina y volver al presente sin salir de tu día a día.</p>
+                <div class="hero-actions">
+                    <a href="#recurso" class="btn-primary">Obtener la Pausa de Emergencia</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Sobre Mí -->
+        <section id="sobre-mi" class="about hidden">
+            <div class="container about-grid">
+                <div class="about-text">
+                    <span class="sub-title">El Origen</span>
+                    <h2>Aprender a parar dentro del mismo ruido.</h2>
+                    <p>No llegué a estas técnicas desde una torre de tranquilidad, sino desde el cansancio de la rutina diaria. Conozco el peso del sobrepensamiento y la sensación de que el tiempo nunca alcanza.</p>
+                    <p>Esa búsqueda de paz me llevó a formarme profundamente en la práctica del yoga y la meditación. Mi objetivo es transmitirte estas herramientas con una estructura clara, paso a paso, para que puedas integrarlas y aprenderlas sin frustración. Comprobé que no hace falta aislarse del mundo para encontrar quietud: la herramienta más potente para regular nuestro sistema nervioso viaja siempre con nosotros.</p>
+                </div>
+                <div class="about-card">
+                    <div class="card-inner">
+                        <h3>Enfoque Práctico</h3>
+                        <ul>
+                            <li><strong>Respiración Guiada:</strong> Técnicas aplicables en cualquier momento.</li>
+                            <li><strong>Anclaje Somático:</strong> Movimientos para soltar la tensión física.</li>
+                            <li><strong>Filosofía Aplicada:</strong> Principios orientales para la vida moderna.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tres Pilares -->
+        <section id="filosofia" class="pillars hidden">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Tres herramientas para reconectar</h2>
+                </div>
+                <div class="pillars-grid">
+                    <div class="pillar-card">
+                        <span class="num">01</span>
+                        <h3>Respiración</h3>
+                        <p>El puente directo para modular el ritmo cardíaco y calmar el sistema nervioso en minutos.</p>
+                    </div>
+                    <div class="pillar-card">
+                        <span class="num">02</span>
+                        <h3>Presencia</h3>
+                        <p>Pausas estratégicas para salir del piloto automático sin interrumpir tus responsabilidades.</p>
+                    </div>
+                    <div class="pillar-card">
+                        <span class="num">03</span>
+                        <h3>Espacio</h3>
+                        <p>Creación de momentos de silencio interior para despejar la sobrecarga cognitiva.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lead Magnet / Captación con Reproductor -->
+        <section id="recurso" class="lead-section hidden">
+            <div class="container">
+                <div class="lead-box">
+                    <h2>Descargá la Pausa de Emergencia</h2>
+                    <p>Un audio guiado de 5 minutos pensado para momentos de agobio mental. Ponete los auriculares y recuperá el eje.</p>
+                    
+                    <!-- Reproductor Visual Simulado -->
+                    <div class="audio-player">
+                        <button class="play-btn" id="playBtn">▶</button>
+                        <div class="progress-bar"><div class="progress"></div></div>
+                        <span class="time">05:00</span>
+                    </div>
+
+                    <form class="lead-form" action="#" method="POST">
+                        <input type="text" placeholder="Tu nombre" required>
+                        <input type="email" placeholder="Tu correo electrónico" required>
+                        <button type="submit" class="btn-primary">Enviar audio completo a mi correo</button>
+                    </form>
+                    <span class="privacy-note">Sin correo no deseado. Solo herramientas para tu práctica personal.</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer hidden">
+        <div class="container footer-content">
+            <p>&copy; 2026 Ritmo de Calma. Todos los derechos reservados.</p>
+            <p class="footer-sub">Diseñado para respirar y pausar.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
