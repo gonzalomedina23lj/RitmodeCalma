@@ -1,139 +1,323 @@
-const header = document.querySelector('.site-header');
-const progressBar = document.getElementById('progressBar');
-const menuToggle = document.getElementById('menuToggle');
-const nav = document.getElementById('nav');
+(() => {
+  'use strict';
 
-function updateScrollUI() {
-  const scrollTop = window.scrollY;
-  const height = document.documentElement.scrollHeight - window.innerHeight;
-  progressBar.style.width = `${height > 0 ? (scrollTop / height) * 100 : 0}%`;
-  header.classList.toggle('scrolled', scrollTop > 30);
-}
-window.addEventListener('scroll', updateScrollUI, { passive: true });
-updateScrollUI();
+  const body = document.body;
+  const header = document.getElementById('siteHeader');
+  const progressBar = document.getElementById('progressBar');
+  const menuToggle = document.getElementById('menuToggle');
+  const nav = document.getElementById('nav');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-menuToggle.addEventListener('click', () => {
-  const open = nav.classList.toggle('open');
-  menuToggle.setAttribute('aria-expanded', open);
-});
-document.querySelectorAll('.nav a').forEach(link => {
-  link.addEventListener('click', () => nav.classList.remove('open'));
-});
+  // ----- Scroll UI ---------------------------------------------------------
+  const updateScrollUI = () => {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollable > 0 ? (scrollTop / scrollable) * 100 : 0;
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
+    progressBar.style.width = `${Math.min(progress, 100)}%`;
+    header.classList.toggle('scrolled', scrollTop > 24);
+  };
+
+  window.addEventListener('scroll', updateScrollUI, { passive: true });
+  updateScrollUI();
+
+  // ----- Mobile navigation -------------------------------------------------
+  const closeMenu = () => {
+    nav.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.setAttribute('aria-label', 'Abrir menú');
+  };
+
+  menuToggle.addEventListener('click', () => {
+    const isOpen = nav.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded', String(isOpen));
+    menuToggle.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
+  });
+
+  nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+
+  document.addEventListener('click', (event) => {
+    if (nav.classList.contains('open') && !nav.contains(event.target) && !menuToggle.contains(event.target)) {
+      closeMenu();
     }
   });
-}, { threshold: 0.12 });
 
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  // ----- Reveal on scroll --------------------------------------------------
+  const revealElements = document.querySelectorAll('.reveal');
 
-document.getElementById('year').textContent = new Date().getFullYear();
+  if (!reducedMotion && 'IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.13, rootMargin: '0px 0px -30px 0px' });
 
-const modal = document.getElementById('pauseModal');
-const startPause = document.getElementById('startPause');
-const modalStart = document.getElementById('modalStart');
-const modalTime = document.getElementById('modalTime');
-const modalPhase = document.getElementById('modalPhase');
-const modalInstruction = document.getElementById('modalInstruction');
-const modalBreath = document.getElementById('modalBreath');
-
-let timer = null;
-let remaining = 60;
-let running = false;
-
-function formatTime(seconds) {
-  return `00:${String(seconds).padStart(2, '0')}`;
-}
-
-function openModal() {
-  modal.classList.add('open');
-  modal.setAttribute('aria-hidden', 'false');
-  document.body.classList.add('modal-open');
-  remaining = 60;
-  running = false;
-  modalTime.textContent = formatTime(remaining);
-  modalPhase.textContent = 'Prepará el cuerpo';
-  modalInstruction.textContent = 'Buscá una postura cómoda. Cuando estés listo, empezamos.';
-  modalStart.textContent = 'Comenzar';
-  modalBreath.classList.remove('inhale', 'exhale');
-}
-
-function closeModal() {
-  clearInterval(timer);
-  timer = null;
-  running = false;
-  modal.classList.remove('open');
-  modal.setAttribute('aria-hidden', 'true');
-  document.body.classList.remove('modal-open');
-}
-
-function setBreathPhase() {
-  const elapsed = 60 - remaining;
-  // 4 segundos inhalar, 6 segundos exhalar.
-  const cycle = elapsed % 10;
-  if (cycle < 4) {
-    modalPhase.textContent = 'Inhalá';
-    modalInstruction.textContent = 'Tomá aire suavemente por la nariz. Sin apurarte.';
-    modalBreath.classList.add('inhale');
-    modalBreath.classList.remove('exhale');
+    revealElements.forEach((element) => revealObserver.observe(element));
   } else {
-    modalPhase.textContent = 'Exhalá';
-    modalInstruction.textContent = 'Soltá el aire lento. Aflojá mandíbula, hombros y manos.';
-    modalBreath.classList.add('exhale');
-    modalBreath.classList.remove('inhale');
+    revealElements.forEach((element) => element.classList.add('visible'));
   }
-}
 
-function finishPause() {
-  clearInterval(timer);
-  timer = null;
-  running = false;
-  modalTime.textContent = '01:00';
-  modalPhase.textContent = 'Volviste';
-  modalInstruction.textContent = 'Un minuto. Eso fue todo. Notá cómo estás ahora, sin juzgarlo.';
-  modalStart.textContent = 'Repetir pausa';
-  modalBreath.classList.remove('inhale', 'exhale');
-}
+  // ----- Active navigation -------------------------------------------------
+  const navLinks = [...document.querySelectorAll('[data-nav]')];
+  const sections = [...document.querySelectorAll('[data-section]')];
 
-function runPause() {
-  if (running) return;
-  running = true;
-  remaining = 60;
-  modalStart.textContent = 'En curso…';
-  setBreathPhase();
-  modalTime.textContent = formatTime(remaining);
+  if ('IntersectionObserver' in window) {
+    const sectionObserver = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
 
-  timer = setInterval(() => {
+      if (!visible) return;
+
+      navLinks.forEach((link) => {
+        link.classList.toggle('active', link.dataset.nav === visible.target.dataset.section);
+      });
+    }, { threshold: [0.25, 0.45, 0.65], rootMargin: '-22% 0px -52% 0px' });
+
+    sections.forEach((section) => sectionObserver.observe(section));
+  }
+
+  // ----- Hero parallax -----------------------------------------------------
+  const heroVisual = document.getElementById('heroVisual');
+
+  if (heroVisual && !reducedMotion && window.matchMedia('(pointer:fine)').matches) {
+    window.addEventListener('pointermove', (event) => {
+      const x = ((event.clientX / window.innerWidth) - 0.5) * 10;
+      const y = ((event.clientY / window.innerHeight) - 0.5) * 10;
+      heroVisual.style.setProperty('--mx', `${x}px`);
+      heroVisual.style.setProperty('--my', `${y}px`);
+    }, { passive: true });
+
+    document.addEventListener('mouseleave', () => {
+      heroVisual.style.setProperty('--mx', '0px');
+      heroVisual.style.setProperty('--my', '0px');
+    });
+  }
+
+  // ----- Magnetic buttons --------------------------------------------------
+  if (!reducedMotion && window.matchMedia('(pointer:fine)').matches) {
+    document.querySelectorAll('.magnetic').forEach((button) => {
+      button.addEventListener('pointermove', (event) => {
+        const rect = button.getBoundingClientRect();
+        const x = event.clientX - rect.left - rect.width / 2;
+        const y = event.clientY - rect.top - rect.height / 2;
+        button.style.transform = `translate(${x * 0.06}px, ${y * 0.09}px) translateY(-2px)`;
+      });
+
+      button.addEventListener('pointerleave', () => {
+        button.style.transform = '';
+      });
+    });
+  }
+
+  // ----- Subtle card tilt --------------------------------------------------
+  if (!reducedMotion && window.matchMedia('(pointer:fine)').matches) {
+    document.querySelectorAll('[data-tilt]').forEach((card) => {
+      card.addEventListener('pointermove', (event) => {
+        const rect = card.getBoundingClientRect();
+        const px = (event.clientX - rect.left) / rect.width;
+        const py = (event.clientY - rect.top) / rect.height;
+        const ry = (px - 0.5) * 4;
+        const rx = (0.5 - py) * 4;
+        card.style.setProperty('--rx', `${rx}deg`);
+        card.style.setProperty('--ry', `${ry}deg`);
+      });
+
+      card.addEventListener('pointerleave', () => {
+        card.style.setProperty('--rx', '0deg');
+        card.style.setProperty('--ry', '0deg');
+      });
+    });
+  }
+
+  // ----- Pause modal -------------------------------------------------------
+  const modal = document.getElementById('pauseModal');
+  const openPauseButtons = document.querySelectorAll('[data-open-pause]');
+  const closePauseButtons = document.querySelectorAll('[data-close-pause]');
+  const pauseStart = document.getElementById('pauseStart');
+  const pauseReset = document.getElementById('pauseReset');
+  const pauseTime = document.getElementById('pauseTime');
+  const breathPhase = document.getElementById('breathPhase');
+  const breathHint = document.getElementById('breathHint');
+  const breathDisc = document.getElementById('breathDisc');
+  const instruction = document.getElementById('modalInstruction');
+  const progressCircle = document.getElementById('progressCircle');
+
+  const TOTAL_SECONDS = 60;
+  const RADIUS = 148;
+  const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
+  const INHALE_SECONDS = 4;
+  const EXHALE_SECONDS = 6;
+
+  let remaining = TOTAL_SECONDS;
+  let intervalId = null;
+  let state = 'idle'; // idle | running | paused | complete
+  let lastFocusedElement = null;
+
+  progressCircle.style.strokeDasharray = String(CIRCUMFERENCE);
+  progressCircle.style.strokeDashoffset = String(CIRCUMFERENCE);
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+  };
+
+  const setProgress = () => {
+    const elapsed = TOTAL_SECONDS - remaining;
+    const fraction = elapsed / TOTAL_SECONDS;
+    progressCircle.style.strokeDashoffset = String(CIRCUMFERENCE * (1 - fraction));
+  };
+
+  const setBreathState = () => {
+    if (state !== 'running') return;
+
+    const elapsed = TOTAL_SECONDS - remaining;
+    const cycle = elapsed % (INHALE_SECONDS + EXHALE_SECONDS);
+
+    if (cycle < INHALE_SECONDS) {
+      breathPhase.textContent = 'INHALÁ';
+      breathHint.textContent = 'suave, por la nariz';
+      instruction.textContent = 'Tomá aire de manera cómoda. No hace falta llenar los pulmones al máximo.';
+      breathDisc.classList.add('inhale');
+      breathDisc.classList.remove('exhale');
+    } else {
+      breathPhase.textContent = 'EXHALÁ';
+      breathHint.textContent = 'lento, sin forzar';
+      instruction.textContent = 'Dejá salir el aire lentamente y observá si podés aflojar hombros, mandíbula y manos.';
+      breathDisc.classList.add('exhale');
+      breathDisc.classList.remove('inhale');
+    }
+  };
+
+  const renderTimer = () => {
+    pauseTime.textContent = formatTime(remaining);
+    setProgress();
+    setBreathState();
+  };
+
+  const stopInterval = () => {
+    if (intervalId) {
+      window.clearInterval(intervalId);
+      intervalId = null;
+    }
+  };
+
+  const resetPause = () => {
+    stopInterval();
+    remaining = TOTAL_SECONDS;
+    state = 'idle';
+    pauseTime.textContent = '01:00';
+    breathPhase.textContent = 'LISTO';
+    breathHint.textContent = 'tomate un momento';
+    instruction.textContent = 'Buscá una postura cómoda. Cuando quieras, empezamos.';
+    pauseStart.textContent = 'Comenzar';
+    pauseReset.disabled = true;
+    breathDisc.classList.remove('inhale', 'exhale');
+    setProgress();
+  };
+
+  const completePause = () => {
+    stopInterval();
+    state = 'complete';
+    remaining = 0;
+    pauseTime.textContent = '00:00';
+    setProgress();
+    breathPhase.textContent = 'VOLVISTE';
+    breathHint.textContent = 'observá cómo estás';
+    instruction.textContent = 'La práctica terminó. Quedate unos segundos más y notá cómo estás, sin necesidad de cambiar nada.';
+    pauseStart.textContent = 'Repetir pausa';
+    pauseReset.disabled = false;
+    breathDisc.classList.remove('inhale', 'exhale');
+  };
+
+  const tick = () => {
     remaining -= 1;
-    modalTime.textContent = formatTime(remaining);
-    setBreathPhase();
+    if (remaining <= 0) {
+      completePause();
+      return;
+    }
+    renderTimer();
+  };
 
-    if (remaining <= 0) finishPause();
-  }, 1000);
-}
+  const startOrTogglePause = () => {
+    if (state === 'complete') {
+      resetPause();
+    }
 
-startPause.addEventListener('click', openModal);
-modalStart.addEventListener('click', () => {
-  if (!running) runPause();
-});
+    if (state === 'running') {
+      stopInterval();
+      state = 'paused';
+      pauseStart.textContent = 'Continuar';
+      breathPhase.textContent = 'PAUSA';
+      breathHint.textContent = 'respirá natural';
+      instruction.textContent = 'La pausa quedó detenida. Podés continuar cuando quieras.';
+      breathDisc.classList.remove('inhale', 'exhale');
+      return;
+    }
 
-document.querySelectorAll('[data-close-pause]').forEach(el => {
-  el.addEventListener('click', closeModal);
-});
+    state = 'running';
+    pauseStart.textContent = 'Pausar';
+    pauseReset.disabled = false;
+    setBreathState();
 
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape' && modal.classList.contains('open')) closeModal();
-});
+    if (!intervalId) {
+      intervalId = window.setInterval(tick, 1000);
+    }
+  };
 
-// Micro-interacción: parallax muy sutil del visual principal.
-const heroVisual = document.querySelector('.hero-visual');
-window.addEventListener('mousemove', (event) => {
-  if (window.innerWidth < 850 || !heroVisual) return;
-  const x = (event.clientX / window.innerWidth - 0.5) * 8;
-  const y = (event.clientY / window.innerHeight - 0.5) * 8;
-  heroVisual.style.transform = `translate(${x}px, ${y}px)`;
-}, { passive: true });
+  const openModal = () => {
+    lastFocusedElement = document.activeElement;
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    body.classList.add('modal-open');
+    resetPause();
+    window.setTimeout(() => pauseStart.focus(), 30);
+  };
+
+  const closeModal = () => {
+    stopInterval();
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    body.classList.remove('modal-open');
+    resetPause();
+    if (lastFocusedElement instanceof HTMLElement) lastFocusedElement.focus();
+  };
+
+  openPauseButtons.forEach((button) => button.addEventListener('click', openModal));
+  closePauseButtons.forEach((button) => button.addEventListener('click', closeModal));
+  pauseStart.addEventListener('click', startOrTogglePause);
+  pauseReset.addEventListener('click', resetPause);
+
+  // Basic focus trap for the modal.
+  modal.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeModal();
+      return;
+    }
+
+    if (event.key !== 'Tab') return;
+
+    const focusables = [...modal.querySelectorAll('button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])')]
+      .filter((element) => !element.hasAttribute('hidden'));
+
+    if (!focusables.length) return;
+
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+
+  // ----- Footer year -------------------------------------------------------
+  document.getElementById('year').textContent = String(new Date().getFullYear());
+})();
