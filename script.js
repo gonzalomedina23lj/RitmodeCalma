@@ -321,3 +321,27 @@
   // ----- Footer year -------------------------------------------------------
   document.getElementById('year').textContent = String(new Date().getFullYear());
 })();
+
+// Retrato "Sobre mí": micro-parallax muy sutil en escritorio.
+// Se desactiva automáticamente si el usuario prefiere movimiento reducido.
+const profilePhotoArea = document.querySelector('[data-photo-parallax]');
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+if (profilePhotoArea && !prefersReducedMotion.matches) {
+  profilePhotoArea.addEventListener('pointermove', (event) => {
+    if (window.innerWidth < 980) return;
+
+    const rect = profilePhotoArea.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+    profilePhotoArea.style.setProperty('--photo-x', `${x * 7}px`);
+    profilePhotoArea.style.setProperty('--photo-y', `${y * 5}px`);
+  });
+
+  profilePhotoArea.addEventListener('pointerleave', () => {
+    profilePhotoArea.style.setProperty('--photo-x', '0px');
+    profilePhotoArea.style.setProperty('--photo-y', '0px');
+  });
+}
+
