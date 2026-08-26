@@ -40,7 +40,7 @@
       <a href="#filosofia" data-nav="filosofia">Filosofía</a>
       <a href="#sobre-mi" data-nav="sobre-mi">Sobre mí</a>
       <a href="#metodo" data-nav="metodo">Método</a>
-      <a class="nav-cta" href="#pausa" data-nav="pausa">Pausa de 60 s</a>
+      <a class="nav-cta" href="#pausa" data-nav="pausa">Probar ahora</a>
     </nav>
   </header>
 
@@ -147,30 +147,45 @@
 
     <section class="section philosophy" id="filosofia" data-section="filosofia">
       <div class="philosophy-visual reveal" aria-hidden="true">
-        <div class="visual-frame">
-          <svg viewBox="0 0 540 680" role="img" aria-label="Ilustración abstracta de quietud y respiración">
-            <defs>
-              <linearGradient id="mist" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#d8e6da"/>
-                <stop offset="1" stop-color="#9fbaa8"/>
-              </linearGradient>
-              <filter id="softBlur"><feGaussianBlur stdDeviation="18"/></filter>
-            </defs>
-            <rect width="540" height="680" rx="180" fill="#eae8df"/>
-            <circle cx="415" cy="155" r="115" fill="#d8b77c" opacity=".35" filter="url(#softBlur)"/>
-            <path d="M65 520C175 365 312 345 472 200" fill="none" stroke="#8ca796" stroke-width="2" opacity=".55"/>
-            <path d="M92 585C185 430 310 423 458 290" fill="none" stroke="#8ca796" stroke-width="1.3" opacity=".4"/>
-            <ellipse cx="265" cy="440" rx="122" ry="145" fill="url(#mist)"/>
-            <circle cx="265" cy="288" r="56" fill="#6f8e7b"/>
-            <path d="M141 546c32-112 94-168 124-168s93 56 125 168" fill="#5c7a68"/>
-            <path d="M128 518c-22 28-35 60-39 98M400 518c22 28 35 60 39 98" fill="none" stroke="#425f51" stroke-width="22" stroke-linecap="round"/>
-            <path d="M198 382c-49 28-85 71-104 124M332 382c49 28 85 71 104 124" fill="none" stroke="#5c7a68" stroke-width="24" stroke-linecap="round"/>
-            <circle cx="265" cy="288" r="94" fill="none" stroke="#fff" stroke-width="1" opacity=".45"/>
-            <circle cx="265" cy="288" r="118" fill="none" stroke="#fff" stroke-width="1" opacity=".23"/>
-          </svg>
+        <div class="visual-frame philosophy-brand-board">
+          <span class="brand-breath brand-breath-in">INHALÁ</span>
+          <span class="brand-breath brand-breath-out">EXHALÁ</span>
+
+          <div class="philosophy-logo-wrap">
+            <span class="brand-aura aura-one"></span>
+            <span class="brand-aura aura-two"></span>
+
+            <svg class="philosophy-logo" viewBox="0 0 420 420" role="presentation">
+              <g class="logo-motion logo-motion-a">
+                <path
+                  d="M95 210 A115 115 0 0 1 325 210"
+                  class="logo-arc logo-arc-a"
+                ></path>
+                <circle cx="95" cy="210" r="9" class="logo-node logo-node-a"></circle>
+              </g>
+
+              <g class="logo-motion logo-motion-b">
+                <path
+                  d="M95 210 A115 115 0 0 1 325 210"
+                  class="logo-arc logo-arc-b"
+                ></path>
+                <circle cx="325" cy="210" r="9" class="logo-node logo-node-b"></circle>
+              </g>
+
+              <circle cx="210" cy="210" r="60" class="logo-core-ring"></circle>
+              <circle cx="210" cy="210" r="46" class="logo-core"></circle>
+              <circle cx="210" cy="210" r="10" class="logo-center"></circle>
+            </svg>
+          </div>
+
+          <div class="brand-concept-copy">
+            <strong>El centro permanece.</strong>
+            <span>Movimiento · equilibrio · presencia</span>
+          </div>
+
           <div class="visual-caption">
-            <strong>Una pausa.</strong>
-            <span>No una escapatoria.</span>
+            <strong>Ritmo de Calma</strong>
+            <span>Una identidad que puede crecer con el proyecto.</span>
           </div>
         </div>
       </div>
@@ -388,7 +403,7 @@
       <div class="modal-copy">
         <p class="eyebrow">PAUSA GUIADA · 60 SEGUNDOS</p>
         <h2 id="modalTitle">Dejá que el ritmo haga el resto.</h2>
-        <p id="modalInstruction" aria-live="polite">Buscá una postura cómoda. Cuando quieras, empezamos.</p>
+        <p class="modal-instruction" id="modalInstruction" aria-live="polite">Buscá una postura cómoda. Cuando quieras, empezamos.</p>
 
         <div class="modal-controls">
           <button class="button button-primary" type="button" id="pauseStart">Comenzar</button>

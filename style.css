@@ -28,7 +28,11 @@ body {
   font-family: var(--sans);
   overflow-x: hidden;
 }
-body.modal-open { overflow: hidden; }
+body.modal-open {
+  overflow: hidden;
+  width: 100%;
+  overscroll-behavior: none;
+}
 button, input, textarea { font: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
 button { color: inherit; }
@@ -155,8 +159,14 @@ img, svg { max-width: 100%; }
   padding: 11px 16px;
   border: 1px solid var(--ink);
   border-radius: 100px;
+  transition: transform .2s ease, color .2s ease, background .2s ease, box-shadow .2s ease;
 }
 .nav-cta:hover { transform: translateY(-2px); }
+.nav-cta.active {
+  color: var(--white);
+  background: var(--ink);
+  box-shadow: 0 9px 24px rgba(15,43,41,.14);
+}
 
 .menu-toggle {
   display: none;
@@ -533,15 +543,143 @@ h2 em {
 }
 .philosophy-visual { position: relative; }
 .visual-frame { position: relative; max-width: 510px; margin-inline: auto; }
-.visual-frame svg { display: block; width: 100%; filter: saturate(.82); }
+
+.philosophy-brand-board {
+  min-height: 640px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(15,43,41,.07);
+  border-radius: 180px 180px 30px 30px;
+  background:
+    radial-gradient(circle at 80% 16%, rgba(215,180,118,.27), transparent 29%),
+    radial-gradient(circle at 18% 75%, rgba(169,197,178,.32), transparent 31%),
+    linear-gradient(145deg, #f2efe6, #e8ebe4);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.34);
+  isolation: isolate;
+}
+.philosophy-brand-board::before {
+  content: "";
+  position: absolute;
+  width: 440px;
+  height: 440px;
+  border-radius: 50%;
+  border: 1px solid rgba(15,43,41,.055);
+  box-shadow:
+    0 0 0 48px rgba(255,255,255,.10),
+    0 0 0 96px rgba(15,43,41,.022);
+  pointer-events: none;
+}
+.philosophy-logo-wrap {
+  position: relative;
+  width: min(78%, 390px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+}
+.philosophy-logo {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.logo-arc {
+  fill: none;
+  stroke-width: 18;
+  stroke-linecap: round;
+}
+.logo-arc-a { stroke: var(--sage-2); }
+.logo-arc-b { stroke: var(--gold); }
+.logo-node-a { fill: var(--sage-2); }
+.logo-node-b { fill: var(--gold); }
+.logo-motion {
+  transform-origin: 210px 210px;
+  transform-box: view-box;
+  will-change: transform;
+}
+.logo-motion-a { animation: philosophySpinA 28s linear infinite; }
+.logo-motion-b { animation: philosophySpinB 35s linear infinite reverse; }
+@keyframes philosophySpinA {
+  from { transform: rotate(28deg); }
+  to { transform: rotate(388deg); }
+}
+@keyframes philosophySpinB {
+  from { transform: rotate(-52deg); }
+  to { transform: rotate(308deg); }
+}
+.logo-core-ring {
+  fill: rgba(255,255,255,.22);
+  stroke: rgba(15,43,41,.13);
+  stroke-width: 1.5;
+}
+.logo-core { fill: var(--ink); }
+.logo-center { fill: var(--cream); }
+
+.brand-aura {
+  position: absolute;
+  z-index: 1;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.aura-one {
+  width: 58%;
+  aspect-ratio: 1;
+  background: rgba(120,153,136,.15);
+  filter: blur(18px);
+}
+.aura-two {
+  width: 38%;
+  aspect-ratio: 1;
+  background: rgba(215,180,118,.16);
+  filter: blur(20px);
+  transform: translate(32%, -30%);
+}
+.brand-breath {
+  position: absolute;
+  top: 49%;
+  z-index: 3;
+  color: rgba(15,43,41,.42);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .25em;
+  writing-mode: vertical-rl;
+}
+.brand-breath-in { left: 27px; transform: translateY(-50%) rotate(180deg); }
+.brand-breath-out { right: 27px; transform: translateY(-50%); }
+
+.brand-concept-copy {
+  position: absolute;
+  left: 50%;
+  bottom: 78px;
+  z-index: 3;
+  width: calc(100% - 80px);
+  transform: translateX(-50%);
+  text-align: center;
+}
+.brand-concept-copy strong {
+  display: block;
+  margin-bottom: 5px;
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 500;
+}
+.brand-concept-copy span {
+  color: var(--ink-3);
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
 .visual-caption {
   position: absolute;
   left: 24px;
   bottom: 24px;
+  z-index: 4;
   padding: 12px 14px;
   border: 1px solid rgba(15,43,41,.08);
   border-radius: 13px;
-  background: rgba(251, 250, 246, .86);
+  background: rgba(251,250,246,.88);
   box-shadow: var(--shadow-sm);
   backdrop-filter: blur(12px);
   font-size: 9.5px;
@@ -936,9 +1074,13 @@ blockquote p { max-width: 420px; margin: 0; font-family: var(--serif); font-size
   position: fixed;
   z-index: 5000;
   inset: 0;
+  width: 100%;
+  max-width: 100vw;
   padding: 24px;
   display: none;
   place-items: center;
+  overflow: hidden;
+  overscroll-behavior: contain;
 }
 .pause-modal.open { display: grid; }
 .modal-backdrop {
@@ -950,7 +1092,8 @@ blockquote p { max-width: 420px; margin: 0; font-family: var(--serif); font-size
 .modal-shell {
   position: relative;
   z-index: 1;
-  width: min(950px, 100%);
+  width: min(950px, calc(100vw - 48px));
+  max-width: 100%;
   min-height: 560px;
   padding: clamp(30px, 5vw, 54px);
   display: grid;
@@ -962,7 +1105,9 @@ blockquote p { max-width: 420px; margin: 0; font-family: var(--serif); font-size
   color: var(--ink);
   background: var(--paper);
   box-shadow: 0 38px 120px rgba(0,0,0,.32);
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  contain: layout paint;
 }
 .modal-shell::after {
   content: "";
@@ -992,7 +1137,20 @@ blockquote p { max-width: 420px; margin: 0; font-family: var(--serif); font-size
 }
 .modal-copy { position: relative; z-index: 2; }
 .modal-copy h2 { margin-bottom: 22px; font-size: clamp(38px, 4vw, 54px); }
-.modal-copy > p:not(.eyebrow) { min-height: 52px; color: var(--ink-3); font-size: 13px; line-height: 1.75; }
+.modal-copy > p:not(.eyebrow) {
+  color: var(--ink-2);
+  font-size: 13.5px;
+  line-height: 1.72;
+}
+.modal-instruction {
+  min-height: 82px;
+  margin-bottom: 0;
+  padding: 13px 15px;
+  border: 1px solid rgba(120,153,136,.19);
+  border-radius: 14px;
+  background: rgba(220,233,223,.42);
+  font-weight: 500;
+}
 .modal-controls { margin-top: 25px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .ghost-button {
   min-height: 48px;
@@ -1005,9 +1163,33 @@ blockquote p { max-width: 420px; margin: 0; font-family: var(--serif); font-size
   cursor: pointer;
 }
 .ghost-button:disabled { opacity: .35; cursor: not-allowed; }
-.modal-tip { display: block; max-width: 450px; margin-top: 20px; color: rgba(92,113,109,.72); font-size: 8.8px; line-height: 1.55; }
-.breath-stage { position: relative; z-index: 1; min-height: 400px; display: grid; place-items: center; }
-.progress-ring { position: absolute; width: 330px; height: 330px; transform: rotate(-90deg); }
+.modal-tip {
+  display: block;
+  max-width: 450px;
+  margin-top: 20px;
+  color: rgba(36,75,71,.76);
+  font-size: 10.2px;
+  line-height: 1.58;
+}
+.breath-stage {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-width: 0;
+  min-height: 400px;
+  display: grid;
+  place-items: center;
+  overflow: visible;
+  transform: translateZ(0);
+}
+.progress-ring {
+  position: absolute;
+  width: 330px;
+  height: 330px;
+  max-width: 88vw;
+  transform: rotate(-90deg) translateZ(0);
+  backface-visibility: hidden;
+}
 .progress-track,
 .progress-value { fill: none; stroke-width: 2; }
 .progress-track { stroke: rgba(15,43,41,.08); }
@@ -1031,12 +1213,15 @@ blockquote p { max-width: 420px; margin: 0; font-family: var(--serif); font-size
   background: radial-gradient(circle at 35% 25%, #7d9d8b, #466b59 70%, #355647);
   box-shadow: 0 28px 70px rgba(53,86,71,.24), inset 0 0 0 1px rgba(255,255,255,.18);
   transition: transform 4s cubic-bezier(.45,0,.25,1), box-shadow .5s ease;
+  transform-origin: center;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 .breath-disc.inhale { transform: scale(1.13); box-shadow: 0 36px 85px rgba(53,86,71,.3), inset 0 0 0 1px rgba(255,255,255,.2); }
 .breath-disc.exhale { transform: scale(.9); }
-.breath-disc span { color: rgba(255,255,255,.69); font-size: 8.5px; font-weight: 700; letter-spacing: .2em; }
+.breath-disc span { color: rgba(255,255,255,.84); font-size: 9.5px; font-weight: 700; letter-spacing: .2em; }
 .breath-disc strong { margin: 7px 0; font-family: var(--serif); font-size: 48px; font-weight: 500; }
-.breath-disc small { color: rgba(255,255,255,.56); font-size: 8.8px; }
+.breath-disc small { color: rgba(255,255,255,.79); font-size: 10px; font-weight: 500; }
 
 @media (max-width: 980px) {
   .hero { grid-template-columns: 1fr; padding-top: 125px; text-align: center; }
@@ -1088,8 +1273,21 @@ blockquote p { max-width: 420px; margin: 0; font-family: var(--serif); font-size
   .pause-copy > p:not(.eyebrow) { margin-inline: auto; }
   .pause-actions { justify-content: center; }
   .pause-preview { min-height: 370px; }
-  .modal-shell { grid-template-columns: 1fr; max-height: calc(100svh - 34px); overflow-y: auto; gap: 25px; text-align: center; }
+  .modal-shell {
+    width: min(100%, calc(100vw - 28px));
+    grid-template-columns: minmax(0, 1fr);
+    max-height: calc(100svh - 28px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    gap: 25px;
+    text-align: center;
+  }
+  .modal-copy,
+  .breath-stage { min-width: 0; }
   .modal-copy > p:not(.eyebrow), .modal-tip { margin-inline: auto; }
+  .modal-instruction { min-height: 92px; }
   .modal-controls { justify-content: center; }
   .breath-stage { min-height: 350px; }
   .mobile-pause { display: inline-flex; }
@@ -1128,6 +1326,12 @@ blockquote p { max-width: 420px; margin: 0; font-family: var(--serif); font-size
   .moment-grid { margin-top: 42px; }
   .moment-card { min-height: 250px; }
   .visual-frame { max-width: 430px; }
+  .philosophy-brand-board { min-height: 520px; border-radius: 125px 125px 24px 24px; }
+  .philosophy-logo-wrap { width: min(78%, 330px); }
+  .brand-breath { display: none; }
+  .brand-concept-copy { bottom: 70px; width: calc(100% - 48px); }
+  .brand-concept-copy strong { font-size: 15px; }
+  .brand-concept-copy span { font-size: 7.6px; }
   .about-card { padding: 30px 22px; }
   .about-profile { min-height: 390px; }
   .profile-photo-shell { width: min(78vw, 280px); border-radius: 130px 130px 24px 24px; }
@@ -1151,12 +1355,22 @@ blockquote p { max-width: 420px; margin: 0; font-family: var(--serif); font-size
   .final-word { font-size: 48px; }
   .footer { grid-template-columns: 1fr; padding-bottom: 95px; }
   .footer-legal { grid-column: auto; }
-  .pause-modal { padding: 12px; }
-  .modal-shell { padding: 34px 20px 28px; border-radius: 24px; }
-  .modal-copy h2 { font-size: 39px; }
-  .breath-stage { min-height: 300px; }
-  .progress-ring { width: 280px; height: 280px; }
-  .breath-disc { width: 210px; height: 210px; }
+  .pause-modal { padding: 8px; }
+  .modal-shell {
+    width: calc(100vw - 16px);
+    max-height: calc(100svh - 16px);
+    padding: 32px 18px 26px;
+    border-radius: 22px;
+  }
+  .modal-copy h2 { font-size: 37px; }
+  .modal-instruction {
+    min-height: 104px;
+    padding: 12px 13px;
+    font-size: 12.8px !important;
+  }
+  .breath-stage { min-height: 294px; }
+  .progress-ring { width: min(276px, 78vw); height: min(276px, 78vw); }
+  .breath-disc { width: min(208px, 59vw); height: min(208px, 59vw); }
   .breath-disc strong { font-size: 42px; }
 }
 

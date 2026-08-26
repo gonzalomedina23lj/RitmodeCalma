@@ -61,24 +61,54 @@
   }
 
   // ----- Active navigation -------------------------------------------------
+  // Se calcula por posición de scroll, en lugar de depender de callbacks
+  // parciales de IntersectionObserver. Así Filosofía, Sobre mí, Método y
+  // Probar ahora se activan exactamente cuando corresponde.
   const navLinks = [...document.querySelectorAll('[data-nav]')];
-  const sections = [...document.querySelectorAll('[data-section]')];
+  const navSections = navLinks
+    .map((link) => ({
+      id: link.dataset.nav,
+      link,
+      section: document.getElementById(link.dataset.nav)
+    }))
+    .filter((item) => item.section);
 
-  if ('IntersectionObserver' in window) {
-    const sectionObserver = new IntersectionObserver((entries) => {
-      const visible = entries
-        .filter((entry) => entry.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+  let activeNavFrame = null;
 
-      if (!visible) return;
+  const updateActiveNav = () => {
+    activeNavFrame = null;
 
-      navLinks.forEach((link) => {
-        link.classList.toggle('active', link.dataset.nav === visible.target.dataset.section);
-      });
-    }, { threshold: [0.25, 0.45, 0.65], rootMargin: '-22% 0px -52% 0px' });
+    const headerHeight = header?.getBoundingClientRect().height || 70;
+    const marker = (window.scrollY || document.documentElement.scrollTop)
+      + headerHeight
+      + Math.min(110, window.innerHeight * 0.16);
 
-    sections.forEach((section) => sectionObserver.observe(section));
-  }
+    let activeId = null;
+
+    navSections.forEach(({ id, section }) => {
+      if (section.offsetTop <= marker) activeId = id;
+    });
+
+    navLinks.forEach((link) => {
+      const isActive = link.dataset.nav === activeId;
+      link.classList.toggle('active', isActive);
+
+      if (isActive) {
+        link.setAttribute('aria-current', 'location');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+  };
+
+  const requestActiveNavUpdate = () => {
+    if (activeNavFrame !== null) return;
+    activeNavFrame = window.requestAnimationFrame(updateActiveNav);
+  };
+
+  window.addEventListener('scroll', requestActiveNavUpdate, { passive: true });
+  window.addEventListener('resize', requestActiveNavUpdate, { passive: true });
+  updateActiveNav();
 
   // ----- Hero parallax -----------------------------------------------------
   const heroVisual = document.getElementById('heroVisual');
