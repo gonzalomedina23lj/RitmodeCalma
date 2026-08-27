@@ -1400,6 +1400,8 @@ blockquote p { max-width: 420px; margin: 0; font-family: var(--serif); font-size
   animation: brandLogoTurn 80s linear infinite;
 }
 
+.site-header .brand-symbol-motion { animation-duration: 66.67s; }
+
 .brand-symbol {
   display: block;
   width: 100%;
@@ -1621,11 +1623,16 @@ blockquote p { max-width: 420px; margin: 0; font-family: var(--serif); font-size
 
 @media (max-width: 560px) {
   .brand-symbol-motion { width: 34px; height: 34px; }
+  .moment-card {
+    align-items: center;
+    text-align: center;
+  }
+  .moment-icon { margin-inline: auto; }
   .philosophy-logo-wrap { top: auto; width: min(76%, 330px); transform: translateY(-30px); }
   .brand-concept-copy { bottom: 40px; width: calc(100% - 36px); }
-  .brand-concept-copy small { font-size: 8px; }
-  .brand-concept-copy span { font-size: 8px; letter-spacing: .035em; }
-  .brand-concept-copy strong { font-size: 17px; }
+  .brand-concept-copy small { font-size: 9.5px; }
+  .brand-concept-copy span { font-size: 9.5px; letter-spacing: .04em; }
+  .brand-concept-copy strong { font-size: 19px; }
   .welcome-audio { padding: 17px; border-radius: 18px; }
   .welcome-play { width: 48px; height: 48px; }
   .welcome-audio-heading strong { font-size: 15px; }
