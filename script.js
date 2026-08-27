@@ -163,7 +163,7 @@
     });
   }
 
-  // ----- Pause modal -------------------------------------------------------
+  // ----- Un minuto de presencia -------------------------------------------------------
   const modal = document.getElementById('pauseModal');
   const openPauseButtons = document.querySelectorAll('[data-open-pause]');
   const closePauseButtons = document.querySelectorAll('[data-close-pause]');
@@ -259,7 +259,7 @@
     breathPhase.textContent = 'VOLVISTE';
     breathHint.textContent = 'observá cómo estás';
     instruction.textContent = 'La práctica terminó. Quedate unos segundos más y notá cómo estás, sin necesidad de cambiar nada.';
-    pauseStart.textContent = 'Repetir pausa';
+    pauseStart.textContent = 'Repetir práctica';
     pauseReset.disabled = false;
     breathDisc.classList.remove('inhale', 'exhale');
   };
@@ -282,15 +282,15 @@
       stopInterval();
       state = 'paused';
       pauseStart.textContent = 'Continuar';
-      breathPhase.textContent = 'PAUSA';
+      breathPhase.textContent = 'PRESENTE';
       breathHint.textContent = 'respirá natural';
-      instruction.textContent = 'La pausa quedó detenida. Podés continuar cuando quieras.';
+      instruction.textContent = 'La práctica quedó detenida. Podés continuar cuando quieras.';
       breathDisc.classList.remove('inhale', 'exhale');
       return;
     }
 
     state = 'running';
-    pauseStart.textContent = 'Pausar';
+    pauseStart.textContent = 'Detener';
     pauseReset.disabled = false;
     setBreathState();
 
@@ -348,6 +348,63 @@
     }
   });
 
+
+
+  // ----- Saludo de bienvenida --------------------------------------------
+  const welcomeAudio = document.getElementById('welcomeAudio');
+  const welcomePlay = document.getElementById('welcomePlay');
+  const welcomePlayIcon = document.getElementById('welcomePlayIcon');
+  const welcomeProgress = document.getElementById('welcomeProgress');
+  const welcomeCurrent = document.getElementById('welcomeCurrent');
+  const welcomeDuration = document.getElementById('welcomeDuration');
+
+  const formatAudioTime = (seconds) => {
+    if (!Number.isFinite(seconds)) return '0:00';
+    const minutes = Math.floor(seconds / 60);
+    const remainder = Math.floor(seconds % 60);
+    return `${minutes}:${String(remainder).padStart(2, '0')}`;
+  };
+
+  const setWelcomePlaying = (playing) => {
+    welcomePlayIcon.textContent = playing ? 'Ⅱ' : '▶';
+    welcomePlay.setAttribute('aria-label', playing ? 'Detener saludo de bienvenida' : 'Reproducir saludo de bienvenida');
+  };
+
+  if (welcomeAudio && welcomePlay && welcomeProgress) {
+    welcomePlay.addEventListener('click', async () => {
+      if (welcomeAudio.paused) {
+        try {
+          await welcomeAudio.play();
+        } catch (error) {
+          setWelcomePlaying(false);
+        }
+      } else {
+        welcomeAudio.pause();
+      }
+    });
+
+    welcomeAudio.addEventListener('play', () => setWelcomePlaying(true));
+    welcomeAudio.addEventListener('pause', () => setWelcomePlaying(false));
+    welcomeAudio.addEventListener('loadedmetadata', () => {
+      welcomeDuration.textContent = formatAudioTime(Math.round(welcomeAudio.duration));
+    });
+    welcomeAudio.addEventListener('timeupdate', () => {
+      const fraction = welcomeAudio.duration ? (welcomeAudio.currentTime / welcomeAudio.duration) * 100 : 0;
+      welcomeProgress.value = String(fraction);
+      welcomeCurrent.textContent = formatAudioTime(welcomeAudio.currentTime);
+      welcomeProgress.style.setProperty('--audio-progress', `${fraction}%`);
+    });
+    welcomeAudio.addEventListener('ended', () => {
+      setWelcomePlaying(false);
+      welcomeProgress.value = '0';
+      welcomeAudio.currentTime = 0;
+    });
+    welcomeProgress.addEventListener('input', () => {
+      if (!welcomeAudio.duration) return;
+      welcomeAudio.currentTime = (Number(welcomeProgress.value) / 100) * welcomeAudio.duration;
+    });
+  }
+
   // ----- Footer year -------------------------------------------------------
   document.getElementById('year').textContent = String(new Date().getFullYear());
 })();
@@ -374,4 +431,3 @@ if (profilePhotoArea && !prefersReducedMotion.matches) {
     profilePhotoArea.style.setProperty('--photo-y', '0px');
   });
 }
-

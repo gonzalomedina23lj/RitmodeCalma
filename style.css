@@ -9,6 +9,7 @@
   --sage-2: #789988;
   --sage-3: #dce9df;
   --gold: #d7b476;
+  --clay: #dfa27c;
   --white: #ffffff;
   --line: rgba(15, 43, 41, .12);
   --line-light: rgba(255, 255, 255, .15);
@@ -1384,4 +1385,168 @@ blockquote p { max-width: 420px; margin: 0; font-family: var(--serif); font-size
   }
   .reveal { opacity: 1; transform: none; }
   .signal-track { transform: none !important; }
+}
+
+
+/* -------------------------------------------------------------------------
+   V6 · presencia, centro y bienvenida
+   ------------------------------------------------------------------------- */
+.brand-symbol {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  flex: 0 0 auto;
+}
+
+.philosophy-brand-board {
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+}
+
+.philosophy-logo-wrap {
+  top: auto;
+  width: min(70%, 410px);
+  z-index: 2;
+  transform: translateY(-28px);
+}
+
+.philosophy-logo-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 18px 34px rgba(15, 43, 41, .09));
+  animation: logoBreathV6 9s ease-in-out infinite;
+}
+
+.brand-concept-copy {
+  bottom: 52px;
+  display: grid;
+  gap: 7px;
+  width: calc(100% - 60px);
+  text-align: center;
+}
+
+.brand-concept-copy small {
+  color: var(--ink-3);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: lowercase;
+}
+
+.brand-concept-copy span {
+  order: 2;
+  color: var(--ink-2);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: lowercase;
+}
+
+.brand-concept-copy strong {
+  order: 3;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 600;
+  text-transform: lowercase;
+}
+
+.welcome-audio {
+  margin: 26px 0 28px;
+  padding: 20px;
+  border: 1px solid rgba(15, 43, 41, .12);
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(255,255,255,.82), rgba(232,225,207,.48));
+  box-shadow: 0 18px 50px rgba(15, 43, 41, .07);
+}
+
+.welcome-audio-heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.welcome-play {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 50%;
+  color: var(--cream);
+  background: var(--ink);
+  box-shadow: 0 12px 28px rgba(15,43,41,.2);
+  cursor: pointer;
+  transition: transform .25s ease, background .25s ease;
+}
+
+.welcome-play:hover { transform: translateY(-2px); background: var(--sage-dark); }
+.welcome-play span { font-size: 17px; line-height: 1; transform: translateX(1px); }
+.welcome-audio-heading div { display: grid; gap: 3px; }
+.welcome-audio-heading small { color: var(--sage-dark); font-size: 9px; font-weight: 700; letter-spacing: .16em; }
+.welcome-audio-heading strong { color: var(--ink); font-family: var(--serif); font-size: 17px; line-height: 1.2; }
+.welcome-audio-heading div > span { color: var(--ink-3); font-size: 12px; }
+
+.welcome-audio-controls {
+  display: grid;
+  grid-template-columns: 34px 1fr 34px;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  color: var(--ink-3);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.welcome-audio-controls input[type="range"] {
+  --audio-progress: 0%;
+  width: 100%;
+  height: 4px;
+  margin: 0;
+  border-radius: 999px;
+  appearance: none;
+  background: linear-gradient(to right, var(--clay) var(--audio-progress), rgba(15,43,41,.14) var(--audio-progress));
+  cursor: pointer;
+}
+
+.welcome-audio-controls input[type="range"]::-webkit-slider-thumb {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--cream);
+  border-radius: 50%;
+  appearance: none;
+  background: var(--sage-dark);
+  box-shadow: 0 2px 7px rgba(15,43,41,.2);
+}
+
+.welcome-audio-controls input[type="range"]::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--cream);
+  border-radius: 50%;
+  background: var(--sage-dark);
+}
+
+@keyframes logoBreathV6 {
+  0%, 100% { transform: scale(.985) rotate(-.4deg); }
+  50% { transform: scale(1.015) rotate(.4deg); }
+}
+
+@media (max-width: 560px) {
+  .brand-symbol { width: 34px; height: 34px; }
+  .philosophy-logo-wrap { top: auto; width: min(76%, 330px); transform: translateY(-30px); }
+  .brand-concept-copy { bottom: 40px; width: calc(100% - 36px); }
+  .brand-concept-copy small { font-size: 8px; }
+  .brand-concept-copy span { font-size: 8px; letter-spacing: .035em; }
+  .brand-concept-copy strong { font-size: 17px; }
+  .welcome-audio { padding: 17px; border-radius: 18px; }
+  .welcome-play { width: 48px; height: 48px; }
+  .welcome-audio-heading strong { font-size: 15px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .philosophy-logo-image { animation: none !important; }
 }
