@@ -21,7 +21,15 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 95px; }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 95px;
+  overflow-x: hidden;
+}
+
+@supports (overflow: clip) {
+  html { overflow-x: clip; }
+}
 body {
   margin: 0;
   background: var(--paper);
