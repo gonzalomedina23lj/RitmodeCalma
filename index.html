@@ -42,8 +42,8 @@
 
     <nav class="nav" id="nav" aria-label="Navegación principal">
       <a href="#filosofia" data-nav="filosofia">Filosofía</a>
-      <a href="#explorar" data-nav="explorar">Explorar</a>
       <a href="#sobre-mi" data-nav="sobre-mi">Sobre mí</a>
+      <a href="#explorar" data-nav="explorar">Explorar</a>
       <a class="nav-cta" href="#presencia" data-nav="presencia">Un minuto</a>
     </nav>
   </header>
@@ -156,9 +156,74 @@
       </div>
     </section>
 
+    <section class="section about" id="sobre-mi" data-section="sobre-mi">
+      <div class="about-card reveal">
+        <figure class="about-profile" data-photo-parallax>
+          <div class="profile-orbit orbit-one" aria-hidden="true"></div>
+          <div class="profile-orbit orbit-two" aria-hidden="true"></div>
+
+          <div class="profile-photo-shell">
+            <img
+              class="profile-photo"
+              src="assets/gonzalo-sobre-mi.png"
+              alt="Gonzalo, docente y profesor de yoga, creador de Ritmo de Calma"
+              width="941"
+              height="1672"
+              loading="lazy"
+              decoding="async"
+            >
+            <span class="profile-photo-glow" aria-hidden="true"></span>
+          </div>
+
+          <figcaption class="profile-label">
+            <strong>Gonzalo</strong>
+            <span>Docencia · Yoga · Práctica</span>
+          </figcaption>
+        </figure>
+
+        <div class="about-copy">
+          <p class="eyebrow">02 — SOBRE MÍ</p>
+          <h2>No enseño desde <em>una torre de calma.</em></h2>
+          <p class="about-lead">
+            Soy Gonzalo. Docente y profesor de yoga. Llegué a estas prácticas buscando
+            herramientas que también pudieran sostenerme a mí en medio de la vida real.
+          </p>
+          <div class="welcome-audio" data-welcome-player>
+            <div class="welcome-audio-heading">
+              <button class="welcome-play" id="welcomePlay" type="button" aria-label="Reproducir saludo de bienvenida">
+                <span id="welcomePlayIcon" aria-hidden="true">▶</span>
+              </button>
+              <div class="welcome-audio-label">
+                <strong>Bienvenida</strong>
+                <span>1:29</span>
+              </div>
+            </div>
+            <div class="welcome-audio-controls">
+              <time id="welcomeCurrent" datetime="PT0M0S">0:00</time>
+              <input id="welcomeProgress" type="range" min="0" max="100" step="0.1" value="0" aria-label="Progreso del saludo">
+              <time id="welcomeDuration" datetime="PT1M29S">1:29</time>
+            </div>
+            <audio id="welcomeAudio" preload="metadata" src="assets/ritmo-de-calma-saludo-inicial-final.mp3"></audio>
+          </div>
+          <p>
+            Esa experiencia es la base de Ritmo de Calma: traducir ideas profundas a
+            prácticas claras, breves y posibles. Mi intención no es decirte cómo deberías
+            sentirte, sino acompañarte a reconocer cómo estás, volver al cuerpo y habitar
+            el presente con más conciencia.
+          </p>
+          <div class="about-tags" aria-label="Enfoques">
+            <span>Respiración guiada</span>
+            <span>Presencia</span>
+            <span>Movimiento consciente</span>
+            <span>Filosofía aplicada</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section explore" id="explorar" data-section="explorar" aria-labelledby="exploreTitle">
       <div class="section-intro centered reveal">
-        <p class="eyebrow">02 — EXPLORAR</p>
+        <p class="eyebrow">03 — EXPLORAR</p>
         <h2 id="exploreTitle">Una práctica para<br> <em>cada forma de volver.</em></h2>
         <p>Un espacio que va a crecer con experiencias claras y posibles para acompañarte en la vida cotidiana.</p>
       </div>
@@ -196,71 +261,6 @@
           <p>Guías, ejercicios y materiales reutilizables para sostener la práctica con autonomía y llevarla a distintos momentos de la semana.</p>
           <span class="explore-type">GUÍAS · EJERCICIOS · MATERIALES</span>
         </article>
-      </div>
-    </section>
-
-    <section class="section about" id="sobre-mi" data-section="sobre-mi">
-      <div class="about-card reveal">
-        <figure class="about-profile" data-photo-parallax>
-          <div class="profile-orbit orbit-one" aria-hidden="true"></div>
-          <div class="profile-orbit orbit-two" aria-hidden="true"></div>
-
-          <div class="profile-photo-shell">
-            <img
-              class="profile-photo"
-              src="assets/gonzalo-sobre-mi.png"
-              alt="Gonzalo, docente y profesor de yoga, creador de Ritmo de Calma"
-              width="941"
-              height="1672"
-              loading="lazy"
-              decoding="async"
-            >
-            <span class="profile-photo-glow" aria-hidden="true"></span>
-          </div>
-
-          <figcaption class="profile-label">
-            <strong>Gonzalo</strong>
-            <span>Docencia · Yoga · Práctica</span>
-          </figcaption>
-        </figure>
-
-        <div class="about-copy">
-          <p class="eyebrow">03 — SOBRE MÍ</p>
-          <h2>No enseño desde <em>una torre de calma.</em></h2>
-          <p class="about-lead">
-            Soy Gonzalo. Docente y profesor de yoga. Llegué a estas prácticas buscando
-            herramientas que también pudieran sostenerme a mí en medio de la vida real.
-          </p>
-          <div class="welcome-audio" data-welcome-player>
-            <div class="welcome-audio-heading">
-              <button class="welcome-play" id="welcomePlay" type="button" aria-label="Reproducir saludo de bienvenida">
-                <span id="welcomePlayIcon" aria-hidden="true">▶</span>
-              </button>
-              <div class="welcome-audio-label">
-                <strong>Bienvenida</strong>
-                <span>1:29</span>
-              </div>
-            </div>
-            <div class="welcome-audio-controls">
-              <time id="welcomeCurrent" datetime="PT0M0S">0:00</time>
-              <input id="welcomeProgress" type="range" min="0" max="100" step="0.1" value="0" aria-label="Progreso del saludo">
-              <time id="welcomeDuration" datetime="PT1M29S">1:29</time>
-            </div>
-            <audio id="welcomeAudio" preload="metadata" src="assets/ritmo-de-calma-saludo-inicial-final.mp3"></audio>
-          </div>
-          <p>
-            Esa experiencia es la base de Ritmo de Calma: traducir ideas profundas a
-            prácticas claras, breves y posibles. Mi intención no es decirte cómo deberías
-            sentirte, sino acompañarte a reconocer cómo estás, volver al cuerpo y habitar
-            el presente con más conciencia.
-          </p>
-          <div class="about-tags" aria-label="Enfoques">
-            <span>Respiración guiada</span>
-            <span>Presencia</span>
-            <span>Movimiento consciente</span>
-            <span>Filosofía aplicada</span>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -311,8 +311,8 @@
 
     <div class="footer-links">
       <a href="#filosofia">Filosofía</a>
-      <a href="#explorar">Explorar</a>
       <a href="#sobre-mi">Sobre mí</a>
+      <a href="#explorar">Explorar</a>
       <a href="#presencia">Un minuto</a>
     </div>
 
