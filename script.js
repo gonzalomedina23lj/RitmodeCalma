@@ -61,9 +61,8 @@
   }
 
   // ----- Active navigation -------------------------------------------------
-  // Se calcula por posición de scroll, en lugar de depender de callbacks
-  // parciales de IntersectionObserver. Así Filosofía, Sobre mí, Método y
-  // Probar ahora se activan exactamente cuando corresponde.
+  // Se calcula por posición de scroll para que cada enlace acompañe la
+  // sección visible, incluso cuando cambia la altura de la ventana.
   const navLinks = [...document.querySelectorAll('[data-nav]')];
   const navSections = navLinks
     .map((link) => ({
@@ -88,6 +87,12 @@
     navSections.forEach(({ id, section }) => {
       if (section.offsetTop <= marker) activeId = id;
     });
+
+    const reachedPageEnd = window.scrollY + window.innerHeight
+      >= document.documentElement.scrollHeight - 2;
+    if (reachedPageEnd && navSections.length) {
+      activeId = navSections[navSections.length - 1].id;
+    }
 
     navLinks.forEach((link) => {
       const isActive = link.dataset.nav === activeId;
@@ -139,26 +144,6 @@
 
       button.addEventListener('pointerleave', () => {
         button.style.transform = '';
-      });
-    });
-  }
-
-  // ----- Subtle card tilt --------------------------------------------------
-  if (!reducedMotion && window.matchMedia('(pointer:fine)').matches) {
-    document.querySelectorAll('[data-tilt]').forEach((card) => {
-      card.addEventListener('pointermove', (event) => {
-        const rect = card.getBoundingClientRect();
-        const px = (event.clientX - rect.left) / rect.width;
-        const py = (event.clientY - rect.top) / rect.height;
-        const ry = (px - 0.5) * 4;
-        const rx = (0.5 - py) * 4;
-        card.style.setProperty('--rx', `${rx}deg`);
-        card.style.setProperty('--ry', `${ry}deg`);
-      });
-
-      card.addEventListener('pointerleave', () => {
-        card.style.setProperty('--rx', '0deg');
-        card.style.setProperty('--ry', '0deg');
       });
     });
   }
