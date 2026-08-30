@@ -1223,7 +1223,7 @@ blockquote p { max-width: 420px; margin: 0; font-family: var(--serif); font-size
   animation: brandLogoTurn 80s linear infinite;
 }
 
-.site-header .brand-symbol-motion { animation-duration: 66.67s; }
+.site-header .brand-symbol-motion { animation-duration: 55.56s; }
 
 .brand-symbol {
   display: block;
