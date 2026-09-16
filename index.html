@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=logo-terra-v3">
+  <link rel="stylesheet" href="style.css?v=contact-form">
   <title>Ritmo de Calma — Volvé a tu centro</title>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="38cd28f6-9287-4475-85c4-ac430f032003" data-domains="ritmodecalma.com,www.ritmodecalma.com"></script>
 </head>
@@ -305,6 +305,47 @@
       </div>
     </section>
 
+    <section class="contact-section" id="contacto" aria-labelledby="contactTitle">
+      <div class="contact-shell">
+        <div class="contact-copy reveal">
+          <p class="eyebrow">05 — CONTACTO</p>
+          <h2 id="contactTitle">¿Querés <em>compartir algo?</em></h2>
+          <p>Si una práctica, una reflexión o alguna idea de Ritmo de Calma resonó con vos, podés escribirme.</p>
+        </div>
+
+        <form class="contact-form reveal delay-1" id="contactForm" action="https://formspree.io/f/mkjgnwpa" method="POST">
+          <div class="contact-fields-row">
+            <div class="contact-field">
+              <label for="contactName">Nombre</label>
+              <input id="contactName" type="text" name="name" autocomplete="name">
+            </div>
+
+            <div class="contact-field">
+              <label for="contactEmail">Correo electrónico</label>
+              <input id="contactEmail" type="email" name="email" autocomplete="email" required>
+            </div>
+          </div>
+
+          <div class="contact-field">
+            <label for="contactMessage">Mensaje</label>
+            <textarea id="contactMessage" name="message" rows="7" required></textarea>
+          </div>
+
+          <div class="contact-honeypot" aria-hidden="true">
+            <label for="contactGotcha">No completar este campo</label>
+            <input id="contactGotcha" type="text" name="_gotcha" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="contact-actions">
+            <button class="button button-primary contact-submit" type="submit">
+              <span data-contact-submit-label>Enviar mensaje</span>
+            </button>
+            <p class="contact-status" id="contactStatus" role="status" aria-live="polite" aria-atomic="true"></p>
+          </div>
+        </form>
+      </div>
+    </section>
+
   </main>
 
   <footer class="footer">
@@ -323,6 +364,7 @@
       <a href="#sobre-mi">Sobre mí</a>
       <a href="#explorar">Explorar</a>
       <a href="#presencia">Un minuto</a>
+      <a href="#contacto">Contacto</a>
     </div>
 
     <div class="footer-legal">
@@ -377,6 +419,7 @@
   }
   </script>
   <script src="script.js"></script>
+  <script src="assets/js/contact-form.js"></script>
   <script src="assets/js/analytics.js"></script>
 </body>
 </html>
