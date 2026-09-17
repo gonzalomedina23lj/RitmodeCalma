@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.ritmodecalma.com/</loc>
-    <lastmod>2026-08-31</lastmod>
+    <lastmod>2026-09-16</lastmod>
   </url>
   <url>
     <loc>https://www.ritmodecalma.com/practicas/volver-al-centro/</loc>
@@ -11,5 +11,9 @@
   <url>
     <loc>https://www.ritmodecalma.com/reflexiones/cuando-los-pensamientos-ocupan-todo-el-espacio/</loc>
     <lastmod>2026-09-10</lastmod>
+  </url>
+  <url>
+    <loc>https://www.ritmodecalma.com/recursos/volver-al-presente/</loc>
+    <lastmod>2026-09-16</lastmod>
   </url>
 </urlset>

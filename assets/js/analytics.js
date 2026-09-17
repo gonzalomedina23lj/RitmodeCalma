@@ -24,10 +24,10 @@
     }
   }
 
-  function trackEvent(name, audio) {
+  function trackEvent(name, element) {
     if (!productionDomains.has(window.location.hostname)) return;
 
-    const { content, contentType } = audio.dataset;
+    const { content, contentType } = element.dataset;
     if (!content || !contentType) return;
 
     const key = `rdc:${name}:${contentType}:${content}`;
@@ -82,6 +82,15 @@
 
   const reportAudioProgress = [...document.querySelectorAll('[data-analytics-audio]')]
     .map(watchAudio);
+
+  [...document.querySelectorAll('[data-analytics-resource]')].forEach((link) => {
+    link.addEventListener('click', () => {
+      const eventName = link.dataset.analyticsResource;
+      if (eventName === 'resource_open' || eventName === 'resource_download') {
+        trackEvent(eventName, link);
+      }
+    });
+  });
 
   // If Umami arrives after playback starts, report any milestone already reached.
   const trackerScript = document.querySelector('script[src="https://cloud.umami.is/script.js"]');

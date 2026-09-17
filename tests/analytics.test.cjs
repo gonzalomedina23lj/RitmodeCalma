@@ -22,7 +22,25 @@ function createAudio(content, contentType) {
   };
 }
 
-function initialize({ hostname = 'www.ritmodecalma.com', audios, storage = new Map(), tracker } = {}) {
+function createResourceLink(eventName, content = 'volver-al-presente') {
+  const listeners = new Map();
+
+  return {
+    dataset: {
+      analyticsResource: eventName,
+      content,
+      contentType: 'resource'
+    },
+    addEventListener(name, callback) {
+      listeners.set(name, callback);
+    },
+    emit(name) {
+      listeners.get(name)?.();
+    }
+  };
+}
+
+function initialize({ hostname = 'www.ritmodecalma.com', audios = [], resources = [], storage = new Map(), tracker } = {}) {
   const events = [];
   let scriptLoaded;
   const window = {
@@ -37,8 +55,9 @@ function initialize({ hostname = 'www.ritmodecalma.com', audios, storage = new M
   };
   const document = {
     querySelectorAll(selector) {
-      assert.equal(selector, '[data-analytics-audio]');
-      return audios;
+      if (selector === '[data-analytics-audio]') return audios;
+      if (selector === '[data-analytics-resource]') return resources;
+      assert.fail(`Unexpected selector: ${selector}`);
     },
     querySelector(selector) {
       assert.equal(selector, 'script[src="https://cloud.umami.is/script.js"]');
@@ -180,4 +199,35 @@ test('does not disrupt playback or mark a failed synchronous tracker call', () =
   state.window.umami = { track(name, data) { state.events.push({ name, data }); } };
   audio.emit('timeupdate');
   assert.deepEqual(state.events.map(({ name }) => name), ['audio_play']);
+});
+
+test('tracks resource open and download once without personal data', () => {
+  const open = createResourceLink('resource_open');
+  const download = createResourceLink('resource_download');
+  const state = initialize({ resources: [open, download] });
+
+  open.emit('click');
+  open.emit('click');
+  download.emit('click');
+  download.emit('click');
+
+  assert.deepEqual(state.events.map(({ name }) => name), [
+    'resource_open', 'resource_download'
+  ]);
+  assert.deepEqual(JSON.parse(JSON.stringify(state.events[0].data)), {
+    content: 'volver-al-presente', content_type: 'resource'
+  });
+  assert.deepEqual(Object.keys(state.events[0].data).sort(), ['content', 'content_type']);
+  assert.equal(state.storage.get('rdc:resource_open:resource:volver-al-presente'), '1');
+  assert.equal(state.storage.get('rdc:resource_download:resource:volver-al-presente'), '1');
+});
+
+test('does not track resource events outside production', () => {
+  const open = createResourceLink('resource_open');
+  const state = initialize({ hostname: '127.0.0.1', resources: [open] });
+
+  open.emit('click');
+
+  assert.equal(state.events.length, 0);
+  assert.equal(state.storage.size, 0);
 });
