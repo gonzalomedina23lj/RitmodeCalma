@@ -18,6 +18,8 @@ test('publishes the approved resource with canonical metadata', () => {
 });
 
 test('provides accessible open and download actions with anonymous analytics', () => {
+  assert.match(resourceHtml, /class="button button-primary resource-open"\s+href="[^\"]+ritmo-de-calma-volver-al-presente\.pdf\?v=lectura-guiada-v2"/);
+  assert.match(resourceHtml, /class="resource-download"\s+href="[^\"]+ritmo-de-calma-volver-al-presente\.pdf\?v=lectura-guiada-v2"/);
   assert.match(resourceHtml, /target="_blank"\s+rel="noopener"\s+data-analytics-resource="resource_open"/);
   assert.match(resourceHtml, /download\s+data-analytics-resource="resource_download"/);
   assert.match(resourceHtml, /data-content="volver-al-presente"/);
