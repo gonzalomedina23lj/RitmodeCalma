@@ -42,9 +42,10 @@ test('keeps the approved PDF intact and includes its lightweight cover', () => {
   ));
 
   assert.equal(pdf.subarray(0, 4).toString(), '%PDF');
-  assert.equal(pdf.length, 7800611);
+  assert.equal(pdf.length, 6603181);
   assert.deepEqual([...cover.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
   assert.ok(cover.length < 600000);
+  assert.match(resourceHtml, /portada-volver-al-presente\.png\?v=lectura-guiada-v2/);
   assert.match(resourceHtml, /Recurso 01 · PDF · 4 páginas/);
 });
 
