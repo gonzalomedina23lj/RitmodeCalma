@@ -231,3 +231,27 @@ test('does not track resource events outside production', () => {
   assert.equal(state.events.length, 0);
   assert.equal(state.storage.size, 0);
 });
+
+test('tracks the second resource independently with the existing event names', () => {
+  const open = createResourceLink('resource_open', 'tres-formas-de-volver-al-presente');
+  const download = createResourceLink('resource_download', 'tres-formas-de-volver-al-presente');
+  const state = initialize({ resources: [open, download] });
+
+  open.emit('click');
+  download.emit('click');
+
+  assert.deepEqual(state.events.map(({ name }) => name), [
+    'resource_open', 'resource_download'
+  ]);
+  assert.deepEqual(JSON.parse(JSON.stringify(state.events[0].data)), {
+    content: 'tres-formas-de-volver-al-presente', content_type: 'resource'
+  });
+  assert.equal(
+    state.storage.get('rdc:resource_open:resource:tres-formas-de-volver-al-presente'),
+    '1'
+  );
+  assert.equal(
+    state.storage.get('rdc:resource_download:resource:tres-formas-de-volver-al-presente'),
+    '1'
+  );
+});
