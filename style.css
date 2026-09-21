@@ -847,6 +847,12 @@ blockquote p { max-width: 420px; margin: 0; font-family: var(--serif); font-size
 .explore-feature--resource strong { color: var(--ink); font-size: 17px; line-height: 1.32; }
 .explore-feature--resource span { color: #5f744c; }
 .explore-link--resource { border-color: rgba(92,116,77,.22); color: #536843; }
+.explore-resources-list {
+  margin-top: auto;
+  display: grid;
+  gap: 10px;
+}
+.explore-resources-list .explore-feature { margin: 0; }
 
 .pause-section {
   position: relative;
@@ -2143,6 +2149,7 @@ blockquote p { max-width: 420px; margin: 0; font-family: var(--serif); font-size
   line-height: .96;
 }
 .resource-copy h1 em { display: block; color: var(--sage-2); font-weight: 500; }
+.resource-page--three-ways .resource-copy h1 { font-size: clamp(52px, 6.7vw, 84px); }
 .resource-subtitle {
   max-width: 590px;
   margin: 29px 0 0;
@@ -2243,6 +2250,7 @@ blockquote p { max-width: 420px; margin: 0; font-family: var(--serif); font-size
   .resource-main { padding: calc(var(--header-h) + 38px) 15px 88px; }
   .resource-layout { margin-top: 40px; gap: 42px; }
   .resource-copy h1 { font-size: clamp(51px, 16vw, 72px); }
+  .resource-page--three-ways .resource-copy h1 { font-size: clamp(44px, 13vw, 60px); }
   .resource-subtitle { margin-top: 25px; font-size: 20px; }
   .resource-description { margin-top: 20px; font-size: 14px; line-height: 1.78; }
   .resource-actions { margin-top: 29px; align-items: stretch; flex-direction: column; }
