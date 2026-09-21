@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.ritmodecalma.com/</loc>
-    <lastmod>2026-09-16</lastmod>
+    <lastmod>2026-09-21</lastmod>
   </url>
   <url>
     <loc>https://www.ritmodecalma.com/practicas/volver-al-centro/</loc>
@@ -15,5 +15,9 @@
   <url>
     <loc>https://www.ritmodecalma.com/recursos/volver-al-presente/</loc>
     <lastmod>2026-09-16</lastmod>
+  </url>
+  <url>
+    <loc>https://www.ritmodecalma.com/recursos/tres-formas-de-volver-al-presente/</loc>
+    <lastmod>2026-09-21</lastmod>
   </url>
 </urlset>
