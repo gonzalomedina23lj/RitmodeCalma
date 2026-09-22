@@ -847,11 +847,13 @@ blockquote p { max-width: 420px; margin: 0; font-family: var(--serif); font-size
 .explore-feature--resource strong { color: var(--ink); font-size: 17px; line-height: 1.32; }
 .explore-feature--resource span { color: #5f744c; }
 .explore-link--resource { border-color: rgba(92,116,77,.22); color: #536843; }
+.explore-practices-list,
 .explore-resources-list {
   margin-top: auto;
   display: grid;
   gap: 10px;
 }
+.explore-practices-list .explore-feature,
 .explore-resources-list .explore-feature { margin: 0; }
 
 .pause-section {
