@@ -7,6 +7,8 @@ const test = require('node:test');
 const root = path.join(__dirname, '..');
 const route = 'practicas/volver-a-lo-que-esta-ocurriendo/';
 const practiceHtml = fs.readFileSync(path.join(root, route, 'index.html'), 'utf8');
+const discomfortRoute = 'practicas/quedarse-con-lo-incomodo/';
+const discomfortHtml = fs.readFileSync(path.join(root, discomfortRoute, 'index.html'), 'utf8');
 const home = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
 
@@ -44,13 +46,44 @@ test('keeps the encoded web master intact', () => {
   assert.equal(audio.subarray(0, 3).toString(), 'ID3');
 });
 
-test('shows both guided practices in Explore and preserves the original route', () => {
-  assert.match(home, /<span class="explore-status explore-status--available">2 prácticas<\/span>/);
+test('shows all guided practices in Explore and preserves the original route', () => {
+  assert.match(home, /<span class="explore-status explore-status--available">3 prácticas<\/span>/);
   assert.match(home, /href="practicas\/volver-al-centro\/"/);
   assert.match(home, /href="practicas\/volver-a-lo-que-esta-ocurriendo\/"/);
   assert.match(home, /<strong>Volver al centro<\/strong>/);
   assert.match(home, /<strong>Volver a lo que está ocurriendo<\/strong>/);
+  assert.match(home, /href="practicas\/quedarse-con-lo-incomodo\/"/);
+  assert.match(home, /<strong>Quedarse con lo incómodo<\/strong>/);
+  assert.match(home, /Una práctica para observar una incomodidad cotidiana sin exigir que desaparezca\./);
   assert.ok(fs.existsSync(path.join(root, 'practicas', 'volver-al-centro', 'index.html')));
+});
+
+test('publishes Quedarse con lo incómodo with canonical metadata', () => {
+  assert.match(discomfortHtml, /<title>Quedarse con lo incómodo \| Ritmo de Calma<\/title>/);
+  assert.match(discomfortHtml, /<link rel="canonical" href="https:\/\/www\.ritmodecalma\.com\/practicas\/quedarse-con-lo-incomodo\/">/);
+  assert.match(discomfortHtml, /"@type": "AudioObject"/);
+  assert.match(discomfortHtml, /"duration": "PT15M4S"/);
+  assert.match(discomfortHtml, /"@type": "Person",\s+"name": "Gonzalo"/);
+  assert.match(discomfortHtml, /"@type": "Organization",\s+"name": "Ritmo de Calma"/);
+});
+
+test('connects Quedarse con lo incómodo to the approved MP3 and analytics', () => {
+  assert.match(discomfortHtml, /data-analytics-audio/);
+  assert.match(discomfortHtml, /data-content="quedarse-con-lo-incomodo"/);
+  assert.match(discomfortHtml, /data-content-type="practice"/);
+  assert.match(discomfortHtml, /src="\.\.\/\.\.\/assets\/audio\/quedarse-con-lo-incomodo\.mp3"/);
+  assert.match(sitemap, /https:\/\/www\.ritmodecalma\.com\/practicas\/quedarse-con-lo-incomodo\//);
+});
+
+test('keeps the approved Quedarse con lo incómodo master byte-identical', () => {
+  const audio = fs.readFileSync(path.join(root, 'assets', 'audio', 'quedarse-con-lo-incomodo.mp3'));
+
+  assert.equal(audio.length, 8909183);
+  assert.equal(
+    crypto.createHash('sha256').update(audio).digest('hex'),
+    '717adacf2f166930febc8b793e56ebdf87b25b9bc755b4ad9200e49246f8daf8'
+  );
+  assert.equal(audio.subarray(0, 3).toString(), 'ID3');
 });
 
 test('links the related resource and includes the new practice in the sitemap', () => {

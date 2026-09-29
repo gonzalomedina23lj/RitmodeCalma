@@ -794,6 +794,11 @@ blockquote .quote-mark--close { right: 0; }
   font-size: 18px;
   font-weight: 500;
 }
+.explore-feature-description {
+  color: rgba(255,255,255,.62);
+  font-size: 11px;
+  line-height: 1.5;
+}
 .explore-feature span {
   color: var(--sage);
   font-size: 9px;
