@@ -1,0 +1,19 @@
+{
+  "series": {
+    "name": "En voz alta",
+    "descriptor": "Podcast · Ritmo de Calma",
+    "description": "Preguntas, lecturas y reflexiones sobre presencia, movimiento y vida cotidiana."
+  },
+  "episodes": [
+    {
+      "number": 1,
+      "slug": "cuanto-tiempo-estamos-realmente-presentes",
+      "title": "¿Cuánto tiempo estamos realmente presentes?",
+      "description": "Una reflexión sobre esos momentos en los que estamos haciendo algo mientras nuestra atención parece encontrarse siempre en otro lugar.",
+      "durationSeconds": 966,
+      "durationLabel": "16:06",
+      "audio": "assets/audio/en-voz-alta/cuanto-tiempo-estamos-realmente-presentes.mp3",
+      "references": []
+    }
+  ]
+}
