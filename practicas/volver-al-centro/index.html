@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../../style.css?v=logo-terra-v3">
+  <link rel="stylesheet" href="../../style.css?v=content-experience-1">
   <title>Volver al centro — Práctica guiada | Ritmo de Calma</title>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="38cd28f6-9287-4475-85c4-ac430f032003" data-domains="ritmodecalma.com,www.ritmodecalma.com"></script>
 </head>
@@ -57,18 +57,31 @@
 
       <div class="practice-layout">
         <div class="practice-copy">
-          <p class="practice-eyebrow">Práctica guiada · 6 minutos</p>
+          <p class="practice-eyebrow">Prácticas guiadas</p>
           <h1>Volver <em>al centro.</em></h1>
+          <div class="practice-meta" aria-label="Datos de la práctica">
+            <span>Práctica guiada · Audio</span>
+          </div>
           <p class="practice-description">
-            Una práctica para llevar la atención al cuerpo, la respiración y el momento presente.
-            Un espacio para observar los pensamientos sin intentar eliminarlos y ejercitar, poco a poco,
-            la capacidad de volver.
+            En medio de un día lleno de estímulos, la atención puede quedar absorbida por pensamientos,
+            pendientes o sensaciones. Esta práctica propone volver al cuerpo y a la respiración como
+            referencias del momento presente, observar lo que aparece sin intentar eliminarlo y ejercitar,
+            poco a poco, la capacidad de regresar cada vez que la atención se aleja.
           </p>
         </div>
 
         <div class="practice-player-card">
           <div class="practice-player-mark" aria-hidden="true"></div>
-          <p class="practice-instruction">Buscá un momento y una posición que te resulten cómodos. No necesitás hacer nada especial.</p>
+          <section class="before-you-begin" aria-labelledby="beforeCenterTitle">
+            <p class="content-section-label" id="beforeCenterTitle">Antes de empezar</p>
+            <ul>
+              <li>Buscá un lugar donde puedas estar unos minutos sin demasiadas interrupciones.</li>
+              <li>Adoptá una postura cómoda que puedas sostener durante la práctica.</li>
+              <li>No necesitás controlar la respiración ni adoptar una postura especial.</li>
+              <li>Podés usar auriculares si te ayudan a escuchar con mayor claridad.</li>
+            </ul>
+          </section>
+          <p class="content-duration"><span>Duración</span><strong>6 min</strong></p>
           <p class="practice-audio-label">Volver al centro · Audio</p>
           <audio class="practice-audio" data-analytics-audio data-content="volver-al-centro" data-content-type="practice" controls preload="metadata">
             <source src="../../assets/audio/volver-al-centro.mp3" type="audio/mpeg">
@@ -76,6 +89,11 @@
           </audio>
         </div>
       </div>
+
+      <section class="post-practice-prompt" aria-labelledby="afterCenterTitle">
+        <p class="content-section-label" id="afterCenterTitle">Antes de seguir</p>
+        <p>¿Qué te ayudó a volver cuando la atención se fue hacia pensamientos, sensaciones o sonidos?</p>
+      </section>
 
       <div class="practice-after">
         <a class="practice-return" href="../../#explorar">Volver a Explorar <span aria-hidden="true">↖</span></a>
@@ -124,7 +142,7 @@
     }
   }
   </script>
-  <script src="../practice.js"></script>
+  <script src="../practice.js?v=content-experience-1"></script>
   <script src="../../assets/js/analytics.js"></script>
 </body>
 </html>

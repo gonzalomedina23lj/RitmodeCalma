@@ -7,6 +7,20 @@
   const nav = document.getElementById('nav');
   const year = document.getElementById('year');
 
+  document.querySelectorAll('.practice-audio').forEach((audio) => {
+    const card = audio.closest('.practice-player-card');
+    if (!card) return;
+
+    const setPlaybackState = (isPlaying) => {
+      card.classList.toggle('is-playing', isPlaying);
+    };
+
+    audio.addEventListener('play', () => setPlaybackState(true));
+    ['pause', 'ended', 'emptied'].forEach((eventName) => {
+      audio.addEventListener(eventName, () => setPlaybackState(false));
+    });
+  });
+
   const updateScrollUI = () => {
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const scrollable = document.documentElement.scrollHeight - window.innerHeight;
